@@ -1,0 +1,53 @@
+/* Paleta de Colores y Tipografía del Entorno */
+body {
+    background-color: #f4f6f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Encabezado Corporativo */
+.navbar-custom {
+    background-color: #1e293b;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* Adaptación del Contenedor de la Tabla */
+.card-custom {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.table-container {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+/* Indicadores Visuales de Estado */
+.badge-disponible {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    padding: 6px 12px;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    font-weight: 600;
+}
+
+.badge-no-disponible {
+    background-color: #f8d7da;
+    color: #842029;
+    padding: 6px 12px;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    font-weight: 600;
+}
+
+/* Personalización de los campos de texto del modal */
+.form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25px rgba(13, 110, 253, 0.25);
+}
+
+

@@ -1,0 +1,83 @@
+/* --- ESTILOS EXCLUSIVOS PARA EL DIALOG DE EDICIÓN --- */
+
+/* Contenedor principal del Dialog nativo */
+dialog#modalEditarVehiculo.modal-editar-custom {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+    padding: 0;
+    width: 100%;
+    max-width: 550px;
+    animation: dialogFadeIn 0.25s ease-out;
+}
+
+/* El fondo oscurecido detrás del dialog */
+dialog#modalEditarVehiculo::backdrop {
+    background: rgba(30, 41, 59, 0.5); /* #1e293b con opacidad */
+    backdrop-filter: blur(4px); /* Suave desenfoque de fondo */
+}
+
+/* Encabezado con el tono oscuro corporativo */
+.modal-header-custom {
+    background-color: #1e293b;
+    color: #ffffff;
+    padding: 18px 24px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header-custom h3 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+/* Cuerpo del formulario con el gris claro del entorno */
+.modal-body-custom {
+    padding: 24px;
+    background-color: #f4f6f9;
+}
+
+/* Botones de acción inferiores */
+.modal-footer-custom {
+    padding: 16px 24px;
+    background-color: #ffffff;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* Botón 'X' personalizado para el cierre */
+.btn-close-custom {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 1.6rem;
+    cursor: pointer;
+    line-height: 1;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.btn-close-custom:hover {
+    opacity: 1;
+}
+
+/* Animación fluida al abrir el modal */
+@keyframes dialogFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
