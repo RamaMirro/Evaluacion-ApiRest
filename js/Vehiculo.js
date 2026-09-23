@@ -50,8 +50,15 @@ function mostrarVehiculo(data) {
         let eliminar = document.createElement("button");
         eliminar.textContent = "Eliminar";
         eliminar.classList.add("btn", "btn-danger", "btn-sm");
+
         eliminar.onclick = function () {
-            console.log("ID Para ELIMINAR:", element.Id);
+
+            if (element.disponible === true || element.disponible === "true") {
+                alert("No es posible eliminar un Vehiculo donde su estado es DISPONIBLE.");
+                console.log("Bloqueado:no es posible eliminar este Vehiculo.");
+                return;
+            }
+            console.log("ID Para ELIMINAR:", element.id);
             EliminarVehiculo(element.id);
         };
 
@@ -92,6 +99,8 @@ async function AbrirModalInscribirVehiculos() {
 
 
 async function InscribirVehiculo() {
+
+
     var altaVehiculo = {
         Marca: document.getElementById("Marca").value.trim().toUpperCase(),
         Modelo: document.getElementById("Modelo").value.trim().toUpperCase(),
@@ -100,9 +109,51 @@ async function InscribirVehiculo() {
         Km: document.getElementById("Km").value.trim(),
         fechaingreso: document.getElementById("FechaIngreso").value.trim(),
         Disponible: document.getElementById("Disponible").checked
-
-
     };
+
+    //VALIDACION CAMPOS EN BLANCO
+    if ((altaVehiculo.Marca === "") ||
+        (altaVehiculo.Modelo === "") ||
+        (altaVehiculo.Año === "") ||
+        (altaVehiculo.Patente === "")
+        ) {
+        alert("Debe completar todos los campos para poder registrar un Vehiculo");
+        return;
+    } 
+    //Validacion Anio. 
+    let añoNumerico = parseInt(añoTexto, 10);
+    let añoActual = new data().getFullYear();
+    
+    if(isNaN(añoNumerico) ||añoNumerico <1900 || añoNumerico > añoActual ){
+        alert("El año no puede ser menor que 1900 y mayor que el actual. ");
+        console.log("Error al ingresar el año.");
+        return;
+    }
+     //VALIDACION PATENTE (3)LETRAS(3)DIGITOS
+    let fomatoPatente = /^[A-Z]{3}\d{3}$/;
+    if(!formatoPatente.test(altaVehiculo.patente)){
+        alert("Debe insertar el Numero de placa de esta manera Ej:AAA123");
+        console.log("El formato de la patente insertada esta mal.");
+        return;
+    }
+    //VALIDACION KM(-)
+    if (altaVehiculo.Km < 0) {
+        alert("No es posible inscribir un vehiculo con Km Negativos");
+        console.log("Los km no pueden ser negativos");
+        return;
+    }
+
+    //VALIDACION PARA LA FECHA
+    let formatoFechaValida = /^\d{4}-\d{2}-\d{2}$/;
+    if(!formatoFechaValida.test(altaVehiculo.fechaingreso)){
+        alert("El formato de la fecha es incorrecto debe usar YYYY-MM-DD.");
+        console.log("Error al insertar fecha, formato incorecto.");
+        return;
+    }
+
+   
+
+
     try {
         const response = await fetch("http://localhost:5200/api/CargaVehiculo", {
             method: "POST",
@@ -111,6 +162,7 @@ async function InscribirVehiculo() {
         });
 
         if (!response.ok) {
+            alert("Todos los campos debe estar completos")
             console.error("Error al crear:", await response.text());
             return;
         }
@@ -181,6 +233,49 @@ async function GuardarCambiosEditar() {
         fechaingreso: document.getElementById("editarFechaIngreso").value.trim(),
         Disponible: document.getElementById("editarDisponible").checked
     };
+//VALIDACION PARA Campos Vacios
+      if ((vehiculoActualizado.Marca === "") ||
+        (vehiculoActualizado.Modelo === "") ||
+        (vehiculoActualizado.Año === "") ||
+        (vehiculoActualizado.Patente === "")
+        ) {
+        alert("Debe completar todos los campos para poder registrar un Vehiculo");
+        return;
+    } 
+
+          //Validacion Anio. 
+    let añoNumerico = parseInt(añoTexto, 10);
+    let añoActual = new data().getFullYear();
+    
+    if(isNaN(añoNumerico) ||añoNumerico <1900 || añoNumerico > añoActual ){
+        alert("El año no puede ser menor que 1900 y mayor que el actual. ");
+        console.log("Error al ingresar el año.");
+        return;
+    }
+    //VALIDACION PARA KM(-)
+    if (vehiculoActualizado.Km < 0) {
+        alert("No es posible inscribir un vehiculo con Km Negativos");
+        console.log("Los km no pueden ser negativos");
+        return;
+    }
+       //VALIDACION PATENTE (3)LETRAS(3)DIGITOS
+    let fomatoPatente = /^[A-Z]{3}\d{3}$/;
+    if(!formatoPatente.test(idVehiculoSeleccionado.patente)){
+        alert("Debe insertar el Numero de placa de esta manera Ej:AAA123");
+        console.log("El formato de la patente insertada esta mal.");
+        return;
+    }
+
+        //VALIDACION PARA LA FECHA
+    let formatoFechaValida = /^\d{4}-\d{2}-\d{2}$/;
+    if(!formatoFechaValida.test(idVehiculoSeleccionado.fechaingreso)){
+        alert("El formato de la fecha es incorrecto debe usar YYYY-MM-DD.");
+        console.log("Error al insertar fecha, formato incorecto.");
+        return;
+    }
+
+ 
+  
 
 
     try {
@@ -225,10 +320,10 @@ function abrirModalEditar(id) {
 function cerrarModal() {
     const modal = document.getElementById("modalEditarVehiculo");
     if (modal) {
-        // El método nativo correcto para ocultar un <dialog> es .close()
+
         modal.close();
 
-        // Limpiamos la variable global por seguridad
+
         idVehiculoSeleccionado = null;
         console.log("Modal de edición cerrado correctamente.");
     } else {
@@ -238,19 +333,20 @@ function cerrarModal() {
 
 
 function EliminarVehiculo(idVehiculoSeleccionado) {
-          vehiculo.id = idVehiculoSeleccionado;
+
     if (!confirm(`¿Estás seguro de que querés eliminar el vehículo con ID: ${idVehiculoSeleccionado}?`)) {
-        return; // Si cancela, frena la función acá
+        return;
+
     }
 
     fetch(`http://localhost:5200/api/CargaVehiculo/${idVehiculoSeleccionado}`, {
         method: "DELETE"
     })
         .then((respuesta) => {
-            // Verificamos si el servidor aceptó el borrado (status 200 al 299)
+
             if (respuesta.ok) {
                 alert("Vehículo eliminado con éxito.");
-                ObtenerVehiculos(); // Recargamos la tabla
+                ObtenerVehiculos();
             } else {
                 alert("No se pudo eliminar el vehículo.");
             }

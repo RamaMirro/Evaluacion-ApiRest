@@ -38,8 +38,8 @@ if (app.Environment.IsDevelopment())
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
-        Path.Combine(builder.Environment.ContentRootPath, "html")),
-    RequestPath = "/html"
+        Path.Combine(builder.Environment.ContentRootPath, "/html")),
+    RequestPath = "./html"
 });
 
 

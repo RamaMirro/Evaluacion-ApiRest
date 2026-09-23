@@ -261,3 +261,4 @@ C:\Users\Ramiro\OneDrive\Escritorio\EvaluacionApiRest\obj\Debug\net8.0\refint\Ev
 C:\Users\Ramiro\OneDrive\Escritorio\EvaluacionApiRest\obj\Debug\net8.0\EvaluacionApiRest.pdb
 C:\Users\Ramiro\OneDrive\Escritorio\EvaluacionApiRest\obj\Debug\net8.0\EvaluacionApiRest.genruntimeconfig.cache
 C:\Users\Ramiro\OneDrive\Escritorio\EvaluacionApiRest\obj\Debug\net8.0\ref\EvaluacionApiRest.dll
+C:\Users\Ramiro\OneDrive\Escritorio\EvaluacionApiRest\obj\Debug\net8.0\EvaluacionApiRest.sourcelink.json
