@@ -83,7 +83,7 @@ async function AbrirModalInscribirVehiculos() {
     document.getElementById("FechaIngreso").value = "";
     document.getElementById("Disponible").checked = false;
 
-    const modalElement = document.getElementBById('modalRegistrarVehiculo');
+    const modalElement = document.getElementById('modalRegistrarVehiculo');
     if (modalElement) {
         if (window.bootstrap) {
             const modal = bootstrap.Modal.getInstance(modalElement) || new bootstrap.modalElement(modalElement);
@@ -121,8 +121,8 @@ async function InscribirVehiculo() {
         return;
     } 
     //Validacion Anio. 
-    let añoNumerico = parseInt(añoTexto, 10);
-    let añoActual = new data().getFullYear();
+    let añoNumerico = parseInt(altaVehiculo.Año, 10);
+    let añoActual = new Date().getFullYear();
     
     if(isNaN(añoNumerico) ||añoNumerico <1900 || añoNumerico > añoActual ){
         alert("El año no puede ser menor que 1900 y mayor que el actual. ");
@@ -130,8 +130,8 @@ async function InscribirVehiculo() {
         return;
     }
      //VALIDACION PATENTE (3)LETRAS(3)DIGITOS
-    let fomatoPatente = /^[A-Z]{3}\d{3}$/;
-    if(!formatoPatente.test(altaVehiculo.patente)){
+    let formatoPatente = /^[A-Z]{3}\d{3}$/;
+    if(!formatoPatente.test(altaVehiculo.Patente)){
         alert("Debe insertar el Numero de placa de esta manera Ej:AAA123");
         console.log("El formato de la patente insertada esta mal.");
         return;
@@ -206,7 +206,7 @@ function CargarDatosEnModal(vehiculo) {
     document.getElementById("editarAño").value = vehiculo.año || "";
     document.getElementById("editarPatente").value = vehiculo.patente || "";
     document.getElementById("editarKm").value = vehiculo.Km || vehiculo.km || "";
-    document.getElementById("editarFechaIngreso").value = vehiculo.fechaingreso || vehiculo.FechaIngreso || "";
+    document.getElementById("editarFechaIngreso").value = vehiculo.fechaingreso ||  "";
     document.getElementById("editarDisponible").checked = (vehiculo.disponible === true || vehiculo.disponible === "true");
 
     const modal = document.getElementById("modalEditarVehiculo");
@@ -244,8 +244,8 @@ async function GuardarCambiosEditar() {
     } 
 
           //Validacion Anio. 
-    let añoNumerico = parseInt(añoTexto, 10);
-    let añoActual = new data().getFullYear();
+    let añoNumerico = parseInt(vehiculoActualizado.Año, 10 );
+    let añoActual = new Date().getFullYear();
     
     if(isNaN(añoNumerico) ||añoNumerico <1900 || añoNumerico > añoActual ){
         alert("El año no puede ser menor que 1900 y mayor que el actual. ");
@@ -259,16 +259,16 @@ async function GuardarCambiosEditar() {
         return;
     }
        //VALIDACION PATENTE (3)LETRAS(3)DIGITOS
-    let fomatoPatente = /^[A-Z]{3}\d{3}$/;
-    if(!formatoPatente.test(idVehiculoSeleccionado.patente)){
+    let formatoPatente = /^[A-Z]{3}\d{3}$/;
+    if(!formatoPatente.test(vehiculoActualizado.Patente)){
         alert("Debe insertar el Numero de placa de esta manera Ej:AAA123");
         console.log("El formato de la patente insertada esta mal.");
         return;
     }
 
-        //VALIDACION PARA LA FECHA
-    let formatoFechaValida = /^\d{4}-\d{2}-\d{2}$/;
-    if(!formatoFechaValida.test(idVehiculoSeleccionado.fechaingreso)){
+        // VALIDACION PARA LA FECHA
+    let formatoFechaValida = /^\d{4}-\d{2}-\d{2}$/;  
+    if(!formatoFechaValida.test(vehiculoActualizado.fechaingreso)){
         alert("El formato de la fecha es incorrecto debe usar YYYY-MM-DD.");
         console.log("Error al insertar fecha, formato incorecto.");
         return;
