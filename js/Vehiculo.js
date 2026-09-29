@@ -19,27 +19,27 @@ function mostrarVehiculo(data) {
 
     data.forEach((element) => {
         let tr = tbody.insertRow();
-        tr.insertCell(0).innerHTML = element.id || "";
-        tr.insertCell(1).innerHTML = element.marca;
-        tr.insertCell(2).innerHTML = element.modelo;
-        tr.insertCell(3).innerHTML = element.año;
-        tr.insertCell(4).innerHTML = element.patente;
-        tr.insertCell(5).innerHTML = element.km;
-        tr.insertCell(6).innerHTML = element.fechaIngreso
+      
+        tr.insertCell(0).innerHTML = element.marca;
+        tr.insertCell(1).innerHTML = element.modelo;
+        tr.insertCell(2).innerHTML = element.año;
+        tr.insertCell(3).innerHTML = element.patente;
+        tr.insertCell(4).innerHTML = element.km;
+        tr.insertCell(5).innerHTML = element.fechaingreso
 
 
         // Formato visual para el estado disponible
-        let celdaDisponible = tr.insertCell(7);
+        let celdaDisponible = tr.insertCell(6);
         if (element.disponible === true || element.disponible === "true") {
             celdaDisponible.innerHTML = '<span class="badge-disponible">Disponible</span>';
         } else {
             celdaDisponible.innerHTML = '<span class="badge-no-disponible">No Disponible</span>';
         }
-        let tdAcciones = tr.insertCell(8);
+        let tdAcciones = tr.insertCell(7);
         tdAcciones.classList.add("text-center");
 
         // Botón Editar
-        let editar = document.createElement("button");
+        let editar =  document.createElement("button");
         editar.textContent = "Editar";
         editar.classList.add("btn", "btn-warning", "btn-sm", "me-2", "text-dark");
         editar.onclick = function () {
@@ -237,7 +237,8 @@ async function GuardarCambiosEditar() {
       if ((vehiculoActualizado.Marca === "") ||
         (vehiculoActualizado.Modelo === "") ||
         (vehiculoActualizado.Año === "") ||
-        (vehiculoActualizado.Patente === "")
+        (vehiculoActualizado.Patente === "")||
+        (vehiculoActualizado.fechaingreso ==="")
         ) {
         alert("Debe completar todos los campos para poder registrar un Vehiculo");
         return;
@@ -267,6 +268,8 @@ async function GuardarCambiosEditar() {
     }
 
         // VALIDACION PARA LA FECHA
+
+   
     let formatoFechaValida = /^\d{4}-\d{2}-\d{2}$/;  
     if(!formatoFechaValida.test(vehiculoActualizado.fechaingreso)){
         alert("El formato de la fecha es incorrecto debe usar YYYY-MM-DD.");
