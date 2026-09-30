@@ -11,23 +11,23 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         ?? throw new InvalidOperationException(
             "Connection string 'DefaultConnection' not found.")
     ));
+
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// CORS configurado de forma abierta para evitar bloqueos por cambio de puerto en Live Server
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("PermitirFrontend", policy =>
-     {
-         policy.WithOrigins("http://127.0.0.1:5500", "http://localhost:5500") // El puerto de tu frontend
-               .AllowAnyHeader()
-               .AllowAnyMethod();
-     });
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
 });
 
-
 var app = builder.Build();
-app.UseCors("PermitirFrontend");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -36,11 +36,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
-// 2. Configuramos qué archivo debe buscar por defecto (ej: index.html o tu archivo principal)
+// Configuración de archivos estáticos (si lo usas para tus vistas)
 var rHtml = Path.Combine(Directory.GetCurrentDirectory(), "/html");
-
-// Asegura que la carpeta exista antes de pasarla al proveedor
 if (!Directory.Exists(rHtml))
 {
     Directory.CreateDirectory(rHtml);
@@ -52,8 +49,10 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "/html"
 });
 
-
 app.UseHttpsRedirection();
+
+// ¡Importante! UseCors debe ir antes de UseAuthorization y MapControllers
+app.UseCors("PermitirFrontend");
 
 app.UseAuthorization();
 

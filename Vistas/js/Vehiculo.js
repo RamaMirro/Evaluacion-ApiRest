@@ -1,9 +1,10 @@
+const API_URL = "https://evaluacion-apirest.onrender.com/api/CargaVehiculo";
 
 let idVehiculoSeleccionado = null;
 let listaVehiculosExistentes =[];
 
 function ObtenerVehiculos() {
-    fetch("http://localhost:5200/api/CargaVehiculo")
+    fetch(API_URL)
         .then((respuesta) => respuesta.json())
         .then((data) => {
             console.log(data);
@@ -185,7 +186,7 @@ async function InscribirVehiculo() {
 
 
     try {
-        const response = await fetch("http://localhost:5200/api/CargaVehiculo", {
+        const response = await fetch(API_URL, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(altaVehiculo)
@@ -325,7 +326,7 @@ async function GuardarCambiosEditar() {
 
 
     try {
-        const respuesta = await fetch(`http://localhost:5200/api/CargaVehiculo/${idVehiculoSeleccionado}`, {
+        const respuesta = await fetch(`${API_URL}/${idVehiculoSeleccionado}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -385,7 +386,7 @@ function EliminarVehiculo(idVehiculoSeleccionado) {
 
     }
 
-    fetch(`http://localhost:5200/api/CargaVehiculo/${idVehiculoSeleccionado}`, {
+    fetch(`${API_URL}/${idVehiculoSeleccionado}`, {
         method: "DELETE"
     })
         .then((respuesta) => {
