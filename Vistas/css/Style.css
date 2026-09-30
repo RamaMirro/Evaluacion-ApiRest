@@ -147,4 +147,18 @@ body {
         margin-top: 15px;
         width: 100% !important;
     }
+
+    /* Hacer que las tarjetas y modales ocupen todo el ancho sin comprimirse */
+    .card-custom, 
+    .modal-body, 
+    .modal-content {
+        width: 100% !important;
+        padding: 15px !important;
+    }
+
+    /* Forzar que todos los campos de texto e inputs usen el ancho completo */
+    #formVehiculo .form-control,
+    .modal-body .form-control {
+        width: 100% !important;
+    }
 }
