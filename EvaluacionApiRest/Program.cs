@@ -16,7 +16,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// CORS configurado de forma abierta para evitar bloqueos por cambio de puerto en Live Server
+// 1. Configurar CORS abierto para desarrollo con Live Server
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("PermitirFrontend", policy =>
@@ -36,8 +36,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Configuración de archivos estáticos (si lo usas para tus vistas)
-var rHtml = Path.Combine(Directory.GetCurrentDirectory(), "/html");
+// 2. ¡IMPORTANTE! UseCors debe ir de los primeros en el pipeline
+app.UseCors("PermitirFrontend");
+
+app.UseHttpsRedirection();
+
+// Configuración de archivos estáticos corregida (sin barra inicial absoluta)
+var rHtml = Path.Combine(Directory.GetCurrentDirectory(), "html");
 if (!Directory.Exists(rHtml))
 {
     Directory.CreateDirectory(rHtml);
@@ -48,11 +53,6 @@ app.UseStaticFiles(new StaticFileOptions
     FileProvider = new PhysicalFileProvider(rHtml),
     RequestPath = "/html"
 });
-
-app.UseHttpsRedirection();
-
-// ¡Importante! UseCors debe ir antes de UseAuthorization y MapControllers
-app.UseCors("PermitirFrontend");
 
 app.UseAuthorization();
 
